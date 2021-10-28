@@ -1,0 +1,51 @@
+{
+    "name": "credpal/cp-cash",
+    "description": "Laravel SDK for CredPal Cash Service",
+    "type": "library",
+    "keywords": ["framework", "laravel", "cash", "credpal", "wallet"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Damilare Anjorin",
+            "email": "damilareanjorin1@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/contracts": "^8.0",
+        "illuminate/support": "^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.5.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "CredPal\\CPCash\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CredPal\\CPCash\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CredPal\\CPCash\\Providers\\CPCashServiceProvider"
+            ],
+            "aliases": {
+                "CPCash": "CredPal\\CPCash\\Facade\\CPCashFacade"
+            }
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-filter": "vendor/bin/phpunit --filter"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
