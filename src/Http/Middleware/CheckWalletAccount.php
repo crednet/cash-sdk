@@ -20,7 +20,7 @@ class CheckWalletAccount
      */
     public function handle($request, Closure $next)
     {
-        $this->isWalletConditionPassed(request('user_id'));
+        $this->isWalletConditionPassed($request->get('user_id'));
 
         return $next($request);
     }
