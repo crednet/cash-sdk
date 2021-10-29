@@ -4,6 +4,7 @@ namespace CredPal\CPCash\Services;
 
 use CredPal\CPCash\Contracts\CPCash;
 use CredPal\CPCash\Exceptions\CPCashException;
+use CredPal\CPCash\Exceptions\NotFoundException;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -38,7 +39,7 @@ class CashService implements CPCash
     /**
      * @return mixed
      * @throws CPCashException
-     * @throws InternalServerException
+     * @throws InternalServerException|NotFoundException
      */
     public function createWallet()
     {
@@ -48,7 +49,7 @@ class CashService implements CPCash
     /**
      * @return mixed
      * @throws CPCashException
-     * @throws InternalServerException
+     * @throws InternalServerException|NotFoundException
      */
     public function getWallets()
     {
@@ -60,7 +61,7 @@ class CashService implements CPCash
      * @param string|int $walletId
      * @return array|mixed
      * @throws CPCashException
-     * @throws InternalServerException
+     * @throws InternalServerException|NotFoundException
      */
     public function getWallet($walletId): array
     {
@@ -72,7 +73,7 @@ class CashService implements CPCash
      * @param int|null $page
      * @return mixed
      * @throws CPCashException
-     * @throws InternalServerException
+     * @throws InternalServerException|NotFoundException
      */
     public function getWalletTransactions($walletId, ?int $page = 1)
     {
@@ -90,7 +91,7 @@ class CashService implements CPCash
      * @param string $description
      * @return array|mixed
      * @throws CPCashException
-     * @throws InternalServerException
+     * @throws InternalServerException|NotFoundException
      */
     public function walletTopUp(
         string $walletId,
@@ -117,7 +118,7 @@ class CashService implements CPCash
      * @param string $description
      * @return array|mixed
      * @throws CPCashException
-     * @throws InternalServerException
+     * @throws InternalServerException|NotFoundException
      */
     public function withdrawFromWallet(string $walletId, string $amount, string $description): array
     {
@@ -133,7 +134,7 @@ class CashService implements CPCash
      * @param string $walletId
      * @return array|mixed
      * @throws CPCashException
-     * @throws InternalServerException
+     * @throws InternalServerException|NotFoundException
      */
     public function lockWallet(string $walletId): array
     {
@@ -144,7 +145,7 @@ class CashService implements CPCash
      * @param string $walletId
      * @return array|mixed
      * @throws CPCashException
-     * @throws InternalServerException
+     * @throws InternalServerException|NotFoundException
      */
     public function unlockWallet(string $walletId): array
     {
@@ -154,7 +155,7 @@ class CashService implements CPCash
     /**
      * @return mixed
      * @throws CPCashException
-     * @throws InternalServerException
+     * @throws InternalServerException|NotFoundException
      */
     public function getProviders()
     {
@@ -173,7 +174,7 @@ class CashService implements CPCash
      * @param mixed $response
      * @return mixed
      * @throws CPCashException
-     * @throws InternalServerException
+     * @throws InternalServerException|NotFoundException
      */
     final protected static function handleResponse($response)
     {
@@ -189,6 +190,7 @@ class CashService implements CPCash
      * @param mixed $response
      * @throws CPCashException
      * @throws InternalServerException
+     * @throws NotFoundException
      */
     final protected static function handleErrorResponse($response): void
     {
@@ -202,7 +204,7 @@ class CashService implements CPCash
         }
 
         if ($response->status() === Response::HTTP_NOT_FOUND) {
-            throw new CPCashException(trans('cpcash::exception.wallet-not-found'));
+            throw new NotFoundException(trans('cpcash::exception.wallet-not-found'));
         }
 
         throw new CPCashException($response['message']);
