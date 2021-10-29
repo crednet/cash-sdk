@@ -2,23 +2,11 @@
 
 namespace CredPal\CPCash\Contracts;
 
-
 use CredPal\CPCash\Exceptions\CPCashException;
 use CredPal\CPCash\Exceptions\InternalServerException;
 
 interface CPCash
 {
-    /**
-     * @param string $uri
-     * @return string
-     */
-    public static function getUrl(string $uri): string;
-
-    /**
-     * @return void
-     */
-    public function setHeaders(): void;
-
     /**
      * @return mixed
      * @throws CPCashException

@@ -28,7 +28,7 @@ class CPCashController extends Controller
 
         return $this->successResponse(
             $this->storeWalletDetails($response['wallet'], request('user_id')),
-            'Wallet Created Successfully',
+            trans('cpcash::wallet.created'),
             Response::HTTP_CREATED
         );
     }
@@ -37,7 +37,7 @@ class CPCashController extends Controller
      */
     public function getWallets(): JsonResponse
     {
-        return $this->successResponse(CPCash::getWallets(), 'All Wallet Fetched Successfully');
+        return $this->successResponse(CPCash::getWallets(), trans('cpcash::wallet.all'));
     }
 
     /**
@@ -46,7 +46,7 @@ class CPCashController extends Controller
      */
     public function getWallet($walletId): JsonResponse
     {
-        return $this->successResponse(CPCash::getWallet($walletId), 'Wallet Details');
+        return $this->successResponse(CPCash::getWallet($walletId), trans('cpcash::wallet.details'));
     }
 
     /**
@@ -57,7 +57,7 @@ class CPCashController extends Controller
     {
         return $this->successResponse(
             CPCash::getWalletTransactions($walletId, request()->query('page')),
-            'Wallet Transactions'
+            trans('cpcash::wallet.transactions')
         );
     }
 
@@ -77,7 +77,7 @@ class CPCashController extends Controller
                 request('reference'),
                 request('description')
             ),
-            'Wallet TopUp Successfully'
+            trans('cpcash::wallet.topup')
         );
     }
 
@@ -91,7 +91,7 @@ class CPCashController extends Controller
 
         return $this->successResponse(
             CPCash::withdrawFromWallet($walletId, request('amount'), request('description')),
-            'Wallet Withdrawal Successful'
+            trans('cpcash::wallet.withdraw')
         );
     }
 
@@ -101,7 +101,7 @@ class CPCashController extends Controller
      */
     public function lockWallet($walletId): JsonResponse
     {
-        return $this->successResponse(CPCash::lockWallet($walletId), 'Wallet Locked Successfully');
+        return $this->successResponse(CPCash::lockWallet($walletId), trans('cpcash::wallet.lock'));
     }
 
     /**
@@ -110,7 +110,7 @@ class CPCashController extends Controller
      */
     public function unlockWallet($walletId): JsonResponse
     {
-        return $this->successResponse(CPCash::unlockWallet($walletId), 'Wallet Unlocked Successfully');
+        return $this->successResponse(CPCash::unlockWallet($walletId), trans('cpcash::wallet.unlock'));
     }
 
     /**
@@ -118,7 +118,7 @@ class CPCashController extends Controller
      */
     public function getWalletProviders(): JsonResponse
     {
-        return $this->successResponse(CPCash::getProviders(), 'Wallet Payment Providers');
+        return $this->successResponse(CPCash::getProviders(), trans('cpcash::wallet.providers'));
     }
 
     /**

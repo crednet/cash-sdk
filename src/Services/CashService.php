@@ -4,6 +4,7 @@ namespace CredPal\CPCash\Services;
 
 use CredPal\CPCash\Contracts\CPCash;
 use CredPal\CPCash\Exceptions\CPCashException;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use CredPal\CPCash\Exceptions\InternalServerException;
@@ -41,7 +42,7 @@ class CashService implements CPCash
      */
     public function createWallet()
     {
-        return static::handleResponse(Http::withHeaders(static::$headers)->post(static::getUrl('wallets')));
+        return static::handleResponse($this->sendRequest()->post(static::getUrl('wallets')));
     }
 
     /**
@@ -51,7 +52,7 @@ class CashService implements CPCash
      */
     public function getWallets()
     {
-        return static::handleResponse(Http::withHeaders(static::$headers)->get(static::getUrl('wallets')));
+        return static::handleResponse($this->sendRequest()->get(static::getUrl('wallets')));
     }
 
     /**
@@ -63,9 +64,7 @@ class CashService implements CPCash
      */
     public function getWallet($walletId): array
     {
-        return static::handleResponse(
-            Http::withHeaders(static::$headers)->get(static::getUrl("wallets/{$walletId}"))
-        );
+        return static::handleResponse($this->sendRequest()->get(static::getUrl("wallets/{$walletId}")));
     }
 
     /**
@@ -78,8 +77,7 @@ class CashService implements CPCash
     public function getWalletTransactions($walletId, ?int $page = 1)
     {
         return static::handleResponse(
-            Http::withHeaders(static::$headers)
-                ->get(static::getUrl("wallets/{$walletId}/transactions?page={$page}"))
+            $this->sendRequest()->get(static::getUrl("wallets/{$walletId}/transactions?page={$page}"))
         );
     }
 
@@ -102,7 +100,7 @@ class CashService implements CPCash
         string $description
     ): array
     {
-        $response = Http::withHeaders(static::$headers)->post(static::getUrl("wallets/{$walletId}/top-up"), [
+        $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/top-up"), [
             'amount' => $amount,
             'provider' => $provider,
             'reference' => $reference,
@@ -123,7 +121,7 @@ class CashService implements CPCash
      */
     public function withdrawFromWallet(string $walletId, string $amount, string $description): array
     {
-        $response = Http::withHeaders(static::$headers)->post(static::getUrl("wallets/{$walletId}/withdraw"), [
+        $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/withdraw"), [
             'amount' => $amount,
             'description' => $description,
         ]);
@@ -139,9 +137,7 @@ class CashService implements CPCash
      */
     public function lockWallet(string $walletId): array
     {
-        return static::handleResponse(
-            Http::withHeaders(static::$headers)->post(static::getUrl("wallets/{$walletId}/lock"))
-        );
+        return static::handleResponse($this->sendRequest()->post(static::getUrl("wallets/{$walletId}/lock")));
     }
 
     /**
@@ -152,9 +148,7 @@ class CashService implements CPCash
      */
     public function unlockWallet(string $walletId): array
     {
-        return static::handleResponse(
-            Http::withHeaders(static::$headers)->post(static::getUrl("wallets/{$walletId}/unlock"))
-        );
+        return static::handleResponse($this->sendRequest()->post(static::getUrl("wallets/{$walletId}/unlock")));
     }
 
     /**
@@ -164,9 +158,15 @@ class CashService implements CPCash
      */
     public function getProviders()
     {
-        return static::handleResponse(
-            Http::withHeaders(static::$headers)->get(static::getUrl("providers"))
-        );
+        return static::handleResponse($this->sendRequest()->get(static::getUrl("providers")));
+    }
+
+    /**
+     * @return PendingRequest
+     */
+    public function sendRequest(): PendingRequest
+    {
+        return Http::withHeaders(static::$headers);
     }
 
     /**
@@ -211,7 +211,7 @@ class CashService implements CPCash
     /**
      * @return void
      */
-    public function setHeaders(): void
+    private function setHeaders(): void
     {
         static::$token = app()->environment('production') ?
             config('cpcash.live.secret_key') :
