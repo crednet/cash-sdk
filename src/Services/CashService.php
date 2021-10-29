@@ -39,7 +39,7 @@ class CashService implements CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function createWallet()
+    public function createWallet()
     {
         return static::handleResponse(Http::withHeaders(static::$headers)->post(static::getUrl('wallets')));
     }
@@ -49,7 +49,7 @@ class CashService implements CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function getWallets()
+    public function getWallets()
     {
         return static::handleResponse(Http::withHeaders(static::$headers)->get(static::getUrl('wallets')));
     }
@@ -61,7 +61,7 @@ class CashService implements CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function getWallet($walletId): array
+    public function getWallet($walletId): array
     {
         return static::handleResponse(
             Http::withHeaders(static::$headers)->get(static::getUrl("wallets/{$walletId}"))
@@ -75,7 +75,7 @@ class CashService implements CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function getWalletTransactions($walletId, ?int $page = 1)
+    public function getWalletTransactions($walletId, ?int $page = 1)
     {
         return static::handleResponse(
             Http::withHeaders(static::$headers)
@@ -94,7 +94,7 @@ class CashService implements CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function walletTopUp(
+    public function walletTopUp(
         string $walletId,
         $amount,
         string $provider,
@@ -121,7 +121,7 @@ class CashService implements CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function withdrawFromWallet(string $walletId, string $amount, string $description): array
+    public function withdrawFromWallet(string $walletId, string $amount, string $description): array
     {
         $response = Http::withHeaders(static::$headers)->post(static::getUrl("wallets/{$walletId}/withdraw"), [
             'amount' => $amount,
@@ -137,7 +137,7 @@ class CashService implements CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function lockWallet(string $walletId): array
+    public function lockWallet(string $walletId): array
     {
         return static::handleResponse(
             Http::withHeaders(static::$headers)->post(static::getUrl("wallets/{$walletId}/lock"))
@@ -150,7 +150,7 @@ class CashService implements CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function unlockWallet(string $walletId): array
+    public function unlockWallet(string $walletId): array
     {
         return static::handleResponse(
             Http::withHeaders(static::$headers)->post(static::getUrl("wallets/{$walletId}/unlock"))
@@ -162,7 +162,7 @@ class CashService implements CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function getProviders()
+    public function getProviders()
     {
         return static::handleResponse(
             Http::withHeaders(static::$headers)->get(static::getUrl("providers"))

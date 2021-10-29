@@ -24,7 +24,7 @@ interface CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function createWallet();
+    public function createWallet();
 
     /**
      * @param string|int $walletId
@@ -33,7 +33,7 @@ interface CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function getWalletTransactions($walletId, int $page);
+    public function getWalletTransactions($walletId, int $page);
 
     /**
      * @description get wallet details
@@ -42,7 +42,7 @@ interface CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function getWallet(string $walletId): array;
+    public function getWallet(string $walletId): array;
 
     /**
      * @description Top up wallet
@@ -55,7 +55,7 @@ interface CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function walletTopup(string $walletId, $amount, string $provider, string $reference, string $description): array;
+    public function walletTopUp(string $walletId, $amount, string $provider, string $reference, string $description): array;
 
     /**
      * @description Withdraw wallet
@@ -66,7 +66,7 @@ interface CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function withdrawFromWallet(string $walletId, string $amount, string $description): array;
+    public function withdrawFromWallet(string $walletId, string $amount, string $description): array;
 
     /**
      * @param string $walletId
@@ -74,7 +74,7 @@ interface CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function lockWallet(string $walletId): array;
+    public function lockWallet(string $walletId): array;
 
     /**
      * @param string $walletId
@@ -82,12 +82,12 @@ interface CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function unlockWallet(string $walletId): array;
+    public function unlockWallet(string $walletId): array;
 
     /**
      * @return mixed
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public static function getProviders();
+    public function getProviders();
 }
