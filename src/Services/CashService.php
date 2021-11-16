@@ -99,8 +99,7 @@ class CashService implements CPCash
         string $provider,
         string $reference,
         string $description
-    ): array
-    {
+    ): array {
         $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/top-up"), [
             'amount' => $amount,
             'provider' => $provider,
@@ -223,6 +222,7 @@ class CashService implements CPCash
             'Accept' => 'application/json',
             'Authorization' => "Bearer " . static::$token
         ];
+        Log::info(static::$headers);
     }
 
     /**
