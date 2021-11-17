@@ -222,7 +222,6 @@ class CashService implements CPCash
             'Accept' => 'application/json',
             'Authorization' => "Bearer " . static::$token
         ];
-        Log::info(static::$headers);
     }
 
     /**
