@@ -26,37 +26,37 @@ class CPCashServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->registerRoutes();
-
-        $this->registerConfig();
-
-        $this->registerResources();
-
-        $this->registerMiddleware();
-
-        $this->registerMigrations();
+        $this->registerRoutes()
+        ->registerConfig()
+        ->registerResources()
+        ->registerMiddleware()
+        ->registerMigrations();
 
     }
 
-    protected function registerConfig(): void
+    protected function registerConfig(): CPCashServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../../config/cpcash.php' => config_path('cpcash.php'),
             ], 'cpcash');
         }
+
+        return $this;
     }
 
-    protected function registerMigrations(): void
+    protected function registerMigrations(): CPCashServiceProvider
     {
         if ($this->app->runningInConsole() && !class_exists('CreateCpcashWalletsTable')) {
             $this->publishes([
                 __DIR__ . '/../../database/migrations/create_cpcash_wallets_table.stub' => database_path('migrations/' . date('Y_m_d_His') . '_create_cpcash_wallets_table.php'),
             ], 'migrations');
         }
+
+        return $this;
     }
 
-    protected function registerResources(): void
+    protected function registerResources(): CPCashServiceProvider
     {
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cpcash');
 
@@ -65,11 +65,15 @@ class CPCashServiceProvider extends ServiceProvider
                 __DIR__.'/../../resources/lang' => resource_path('lang/vendor/cpcash'),
             ], 'cpcash');
         }
+
+        return $this;
     }
 
-    protected function registerRoutes(): void
+    protected function registerRoutes(): CPCashServiceProvider
     {
         Route::group($this->routeConfiguration(), fn() => $this->loadRoutesFrom(__DIR__.'/../../routes/cpcash.php'));
+
+        return $this;
     }
 
     protected function routeConfiguration(): array
@@ -80,9 +84,11 @@ class CPCashServiceProvider extends ServiceProvider
         ];
     }
 
-    protected function registerMiddleware(): void
+    protected function registerMiddleware(): CPCashServiceProvider
     {
         $router = $this->app->make(Router::class);
         $router->aliasMiddleware('check-wallet-account', CheckWalletAccount::class);
+
+        return $this;
     }
 }
