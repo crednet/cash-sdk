@@ -26,7 +26,8 @@ trait WalletAccount
     {
         return DB::table('cpcash_wallets')->insertGetId([
             'user_id' => $userId,
-            'wallet_id' => $response['id']
+            'wallet_id' => $response['id'],
+            'created_at' => now()
         ]);
     }
 

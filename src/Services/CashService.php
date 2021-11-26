@@ -181,7 +181,7 @@ class CashService implements CPCash
             static::handleErrorResponse($response);
         }
 
-        return $response->json('data');
+        return $response->json('data')['data'];
     }
 
     /**
