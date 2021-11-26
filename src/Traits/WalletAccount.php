@@ -42,7 +42,7 @@ trait WalletAccount
     }
 
     /**
-     * @param $userId
+     * @param mixed $userId
      * @throws CPCashException
      * @throws NotFoundException
      * @return void

@@ -7,6 +7,9 @@ use CredPal\CPCash\Exceptions\NotFoundException;
 use CredPal\CPCash\Facades\CPCash;
 use CredPal\CPCash\Traits\WalletAccount;
 use Illuminate\Http\JsonResponse;
+use CredPal\CPCash\Http\Requests\CreateWalletRequest;
+use CredPal\CPCash\Http\Requests\WalletTopUpRequest;
+use CredPal\CPCash\Http\Requests\WalletWithdrawRequest;
 use Symfony\Component\HttpFoundation\Response;
 
 class CPCashController extends Controller
@@ -18,11 +21,9 @@ class CPCashController extends Controller
      * @throws CPCashException
      * @throws NotFoundException
      */
-    public function createWallet(): JsonResponse
+    public function createWallet(CreateWalletRequest $request): JsonResponse
     {
-        $this->validateWalletRequest('create');
-
-        $this->isWalletConditionPassed(request('user_id'));
+        $this->isWalletConditionPassed($request->input('user_id'));
 
         $response = CPCash::createWallet();
 
@@ -65,17 +66,15 @@ class CPCashController extends Controller
      * @param string|int $walletId
      * @return JsonResponse
      */
-    public function walletTopUp($walletId): JsonResponse
+    public function walletTopUp($walletId, WalletTopUpRequest $request): JsonResponse
     {
-        $this->validateWalletRequest();
-
         return $this->successResponse(
             CPCash::walletTopUp(
                 $walletId,
-                request('amount'),
-                request('provider'),
-                request('reference'),
-                request('description')
+                $request->input('amount'),
+                $request->input('provider'),
+                $request->input('reference'),
+                $request->input('description')
             ),
             trans('cpcash::wallet.topup')
         );
@@ -85,12 +84,10 @@ class CPCashController extends Controller
      * @param string|int $walletId
      * @return JsonResponse
      */
-    public function withdrawFromWallet($walletId): JsonResponse
+    public function withdrawFromWallet($walletId, WalletWithdrawRequest $request): JsonResponse
     {
-        $this->validateWalletRequest('withdraw');
-
         return $this->successResponse(
-            CPCash::withdrawFromWallet($walletId, request('amount'), request('description')),
+            CPCash::withdrawFromWallet($walletId, $request->input('amount'), $request->input('description')),
             trans('cpcash::wallet.withdraw')
         );
     }
@@ -119,30 +116,5 @@ class CPCashController extends Controller
     public function getWalletProviders(): JsonResponse
     {
         return $this->successResponse(CPCash::getProviders(), trans('cpcash::wallet.providers'));
-    }
-
-    /**
-     * @param string $type
-     * @return void
-     */
-    protected function validateWalletRequest(string $type = 'topup'): void
-    {
-        switch($type) {
-            case 'topup':
-                request()->validate([
-                    'amount' => 'required|numeric',
-                    'reference' => 'required|string',
-                    'provider' => 'required|string',
-                    'description' => 'required'
-                ]);
-                break;
-            case 'withdraw':
-                request()->validate(['amount' => 'required|numeric', 'description' => 'required']);
-                break;
-            case 'create':
-                request()->validate(['user_id' => 'required']);
-                break;
-            default:
-        }
     }
 }
