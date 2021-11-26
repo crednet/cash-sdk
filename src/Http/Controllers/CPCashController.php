@@ -5,7 +5,7 @@ namespace CredPal\CPCash\Http\Controllers;
 use CredPal\CPCash\Exceptions\CPCashException;
 use CredPal\CPCash\Exceptions\NotFoundException;
 use CredPal\CPCash\Facades\CPCash;
-use CredPal\CPCash\Traits\WalletAccount;
+use CredPal\CPCash\Traits\HasWalletAccount;
 use Illuminate\Http\JsonResponse;
 use CredPal\CPCash\Http\Requests\CreateWalletRequest;
 use CredPal\CPCash\Http\Requests\WalletTopUpRequest;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CPCashController extends Controller
 {
-    use WalletAccount;
+    use HasWalletAccount;
 
     /**
      * @return JsonResponse

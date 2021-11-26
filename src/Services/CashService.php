@@ -124,6 +124,7 @@ class CashService implements CPCash
         $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/withdraw"), [
             'amount' => $amount,
             'description' => $description,
+            'category' => 'withdrawal'
         ]);
 
         return static::handleResponse($response);

@@ -6,7 +6,7 @@ use CredPal\CPCash\Exceptions\CPCashException;
 use CredPal\CPCash\Exceptions\NotFoundException;
 use Illuminate\Support\Facades\DB;
 
-trait WalletAccount
+trait HasWalletAccount
 {
     /**
      * @param int|string $userId
@@ -49,7 +49,7 @@ trait WalletAccount
      */
     protected function isWalletConditionPassed($userId): void
     {
-        if (!$this->findUser($userId)) {
+        if (!isset($userId) && !$this->findUser($userId)) {
             throw new NotFoundException(trans('cpcash::exception.user-not-found'));
         }
 

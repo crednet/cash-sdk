@@ -5,11 +5,11 @@ namespace CredPal\CPCash\Http\Middleware;
 use Closure;
 use CredPal\CPCash\Exceptions\CPCashException;
 use CredPal\CPCash\Exceptions\NotFoundException;
-use CredPal\CPCash\Traits\WalletAccount;
+use CredPal\CPCash\Traits\HasWalletAccount;
 
 class CheckWalletAccount
 {
-    use WalletAccount;
+    use HasWalletAccount;
 
     /**
      * @param $request
