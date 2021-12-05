@@ -57,4 +57,14 @@ trait HasWalletAccount
             throw new CPCashException(trans('cpcash::exception.wallet-exists'));
         }
     }
+
+    /**
+     * @param int $cardId
+     * @param string $table
+     * @return object|null
+     */
+    protected function findCard(int $cardId, string $table = config('cpcash.cards_table')): ?object
+    {
+        return DB::table($table)->select(['authorization_code', 'email'])->whereId($cardId)->first();
+    }
 }
