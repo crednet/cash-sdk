@@ -83,12 +83,14 @@ class CashService implements CPCash
     }
 
     /**
-     * @description Top up wallet
+     * @description Top up wallet with card
      * @param string $walletId
-     * @param string|int $amount
+     * @param string|int|float $amount
      * @param string $provider
      * @param string $reference
      * @param string $description
+     * @param string $authorizationCode
+     * @param string $email
      * @return array|mixed
      * @throws CPCashException
      * @throws InternalServerException|NotFoundException
@@ -98,9 +100,41 @@ class CashService implements CPCash
         $amount,
         string $provider,
         string $reference,
-        string $description
+        string $description,
+        string $authorizationCode,
+        string $email
     ): array {
         $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/top-up"), [
+            'amount' => $amount,
+            'provider' => $provider,
+            'reference' => $reference,
+            'description' => $description,
+            'authorization_code' => $authorizationCode,
+            'email' => $email
+        ]);
+
+        return static::handleResponse($response);
+    }
+
+    /**
+     * @description Top up wallet with reference
+     * @param string $walletId
+     * @param string|int|float $amount
+     * @param string $provider
+     * @param string $reference
+     * @param string $description
+     * @return array|mixed
+     * @throws CPCashException
+     * @throws InternalServerException|NotFoundException
+     */
+    public function walletTopUpWithReference(
+        string $walletId,
+        $amount,
+        string $provider,
+        string $reference,
+        string $description
+    ): array {
+        $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/top-up-reference"), [
             'amount' => $amount,
             'provider' => $provider,
             'reference' => $reference,
@@ -167,7 +201,7 @@ class CashService implements CPCash
      */
     public function sendRequest(): PendingRequest
     {
-        return Http::withHeaders(static::$headers);
+        return Http::timeout(60)->withHeaders(static::$headers);
     }
 
     /**
@@ -219,10 +253,12 @@ class CashService implements CPCash
             config('cpcash.live.secret_key') :
             config('cpcash.test.secret_key');
 
-        static::$headers = [
-            'Accept' => 'application/json',
-            'Authorization' => "Bearer " . static::$token
-        ];
+        return tap($this, function () {
+            return static::$token = array_merge_recursive(static::$headers, [
+                'Accept' => 'application/json',
+                'Authorization' => "Bearer " . static::$token
+            ]);
+        });
     }
 
     /**
@@ -233,6 +269,6 @@ class CashService implements CPCash
     {
         static::$url = config('cpcash.base_url');
 
-        return static::$url . $uri;
+        return trim(static::$url . $uri);
     }
 }
