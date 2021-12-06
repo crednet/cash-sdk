@@ -60,11 +60,10 @@ trait HasWalletAccount
 
     /**
      * @param int $cardId
-     * @param string $table
      * @return object|null
      */
-    protected function findCard(int $cardId, string $table = config('cpcash.cards_table')): ?object
+    protected function findCard(int $cardId): ?object
     {
-        return DB::table($table)->select(['authorization_code', 'email'])->whereId($cardId)->first();
+        return DB::table(config('cpcash.cards_table'))->select(['authorization_code', 'email'])->whereId($cardId)->first();
     }
 }
