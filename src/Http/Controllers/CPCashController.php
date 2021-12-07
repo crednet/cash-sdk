@@ -68,14 +68,13 @@ class CPCashController extends Controller
      */
     public function walletTopUp($walletId, WalletTopUpRequest $request): JsonResponse
     {
-        $card = optional($this->findCard($request->input('card_id')));
+        $card = $this->findCard($request->input('card_id'));
 
         return $this->successResponse(
             CPCash::walletTopUp(
                 $walletId,
                 $request->input('amount'),
                 $request->input('provider'),
-                $request->input('reference'),
                 $request->input('description'),
                 $card->{'authorization_code'},
                 $card->{'email'}
