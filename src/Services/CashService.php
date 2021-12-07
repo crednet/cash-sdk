@@ -87,7 +87,6 @@ class CashService implements CPCash
      * @param string $walletId
      * @param string|int|float $amount
      * @param string $provider
-     * @param string $reference
      * @param string $description
      * @param string $authorizationCode
      * @param string $email
@@ -99,7 +98,6 @@ class CashService implements CPCash
         string $walletId,
         $amount,
         string $provider,
-        string $reference,
         string $description,
         string $authorizationCode,
         string $email
@@ -107,7 +105,6 @@ class CashService implements CPCash
         $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/top-up"), [
             'amount' => $amount,
             'provider' => $provider,
-            'reference' => $reference,
             'description' => $description,
             'authorization_code' => $authorizationCode,
             'email' => $email

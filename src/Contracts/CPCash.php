@@ -37,7 +37,6 @@ interface CPCash
      * @param string $walletId
      * @param string|int|float $amount
      * @param string $provider
-     * @param string $reference
      * @param string $description
      * @param string $authorizationCode
      * @param string $email
@@ -49,7 +48,6 @@ interface CPCash
         string $walletId,
         $amount,
         string $provider,
-        string $reference,
         string $description,
         string $authorizationCode,
         string $email
