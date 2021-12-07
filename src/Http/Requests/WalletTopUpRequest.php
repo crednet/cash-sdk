@@ -29,7 +29,7 @@ class WalletTopUpRequest extends FormRequest
             'provider' => 'required|string|max:50',
             'reference' => 'required_without:card_id|string',
             'description' => 'nullable',
-            'card_id' => ['required_without:reference', Rule::exists(config('cards_table'), 'id')]
+            'card_id' => ['required_without:reference', Rule::exists("personal_repayment_cards", 'id')]
         ];
     }
 }
