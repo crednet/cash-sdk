@@ -244,17 +244,14 @@ class CashService implements CPCash
         throw new CPCashException($response['message']);
     }
 
-    /**
-     * @return void
-     */
-    private function setHeaders(): void
+    private function setHeaders()
     {
         static::$token = app()->environment('production') ?
             config('cpcash.live.secret_key') :
             config('cpcash.test.secret_key');
 
         return tap($this, function () {
-            return static::$token = array_merge_recursive(static::$headers, [
+            static::$headers = array_merge_recursive(static::$headers, [
                 'Accept' => 'application/json',
                 'Authorization' => "Bearer " . static::$token
             ]);
