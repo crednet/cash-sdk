@@ -5,22 +5,6 @@ parameters:
     level: 5
     paths:
         - src
-        - config
-        - tests
-
-    ignoreErrors:
-        - '#Cannot access property [\$A-Za-z0-9\s]+ on [a-z\|A-Z0-9\\_]+<string, mixed>#'
-        - '#Cannot access property [\$A-Za-z0-9\s]+ on [a-z\|A-Z0-9\\_]+<string, null>#'
-        - '#Access to an undefined property#'
-        - '#Cannot call method [a-zA-Z0-9\\_\(\)]+ on [a-zA-Z0-9\\_]+<string, int\|string>#'
-        - '#Cannot call method [a-zA-Z0-9\\_\(\)]+ on [a-zA-Z0-9\\_]+<string, mixed>#'
-
-
-    excludePaths:
-        - database/*
-        - resources/*
-        - */factories/*
-        - */migrations/*
 
     parallel:
         processTimeout: 300.0
