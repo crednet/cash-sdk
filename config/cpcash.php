@@ -18,4 +18,6 @@ return [
     'cards_table' => env('PERSONAL_CARDS_TABLE', 'personal_repayment_cards'),
 
     'middleware' => ['api'],
+    'feature_access_top_up' => ['feature-access:cash-top-up'],
+    'feature_access_withdraw' => ['feature-access:cash-withdrawal']
 ];
