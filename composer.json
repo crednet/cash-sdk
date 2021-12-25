@@ -25,11 +25,6 @@
             "CredPal\\CPCash\\": "src"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "CredPal\\CPCash\\Tests\\": "tests"
-        }
-    },
     "config": {
         "sort-packages": true
     },
@@ -39,13 +34,14 @@
                 "CredPal\\CPCash\\Providers\\CPCashServiceProvider"
             ],
             "aliases": {
-                "CPCash": "CredPal\\CPCash\\Facade\\CPCashFacade"
+                "CPCash": "CredPal\\CPCash\\Facades\\CPCash"
             }
         }
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
-        "test-filter": "vendor/bin/phpunit --filter"
+        "test-filter": "vendor/bin/phpunit --filter",
+        "phpstan": "vendor/bin/phpstan analyse --memory-limit=2G"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

@@ -16,12 +16,12 @@ interface CPCash
 
     /**
      * @param string|int $walletId
-     * @param int $page
+     * @param int|string|array|null $page
      * @return mixed
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public function getWalletTransactions($walletId, int $page);
+    public function getWalletTransactions($walletId, $page = 1);
 
     /**
      * @description get wallet details
@@ -30,7 +30,7 @@ interface CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public function getWallet(string $walletId): array;
+    public function getWallet(string $walletId);
 
     /**
      * @description Top up wallet
@@ -51,7 +51,7 @@ interface CPCash
         string $description,
         string $authorizationCode,
         string $email
-    ): array;
+    );
 
     /**
      * @description Top up wallet with reference
@@ -70,7 +70,7 @@ interface CPCash
         string $provider,
         string $reference,
         string $description
-    ): array;
+    );
 
     /**
      * @description Withdraw wallet
@@ -81,7 +81,7 @@ interface CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public function withdrawFromWallet(string $walletId, string $amount, string $description): array;
+    public function withdrawFromWallet(string $walletId, string $amount, string $description);
 
     /**
      * @param string $walletId
@@ -89,7 +89,7 @@ interface CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public function lockWallet(string $walletId): array;
+    public function lockWallet(string $walletId);
 
     /**
      * @param string $walletId
@@ -97,7 +97,7 @@ interface CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public function unlockWallet(string $walletId): array;
+    public function unlockWallet(string $walletId);
 
     /**
      * @return mixed
