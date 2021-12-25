@@ -38,6 +38,7 @@ trait HasWalletAccount
      */
     protected function findUser(int $userId, string $table = 'users'): bool
     {
+        // @phpstan-ignore-next-line
         return DB::table($table)->whereId($userId)->exists();
     }
 
@@ -65,6 +66,7 @@ trait HasWalletAccount
      */
     protected function findCard(int $cardId, string $table = "personal_repayment_cards"): ?object
     {
+        // @phpstan-ignore-next-line
         return DB::table($table)->select(['authorization_code', 'email'])->whereId($cardId)->first();
     }
 }
