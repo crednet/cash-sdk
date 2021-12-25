@@ -14,9 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 class CashService implements CPCash
 {
     /**
-     * @var string
+     * @var string|null
      */
-    protected static string $token;
+    protected static ?string $token;
 
     /**
      * @var array
