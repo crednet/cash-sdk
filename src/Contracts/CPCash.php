@@ -16,12 +16,12 @@ interface CPCash
 
     /**
      * @param string|int $walletId
-     * @param int $page
+     * @param int|string|array|null $page
      * @return mixed
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public function getWalletTransactions($walletId, int $page);
+    public function getWalletTransactions($walletId, $page = 1);
 
     /**
      * @description get wallet details

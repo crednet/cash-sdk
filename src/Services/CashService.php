@@ -63,19 +63,19 @@ class CashService implements CPCash
      * @throws CPCashException
      * @throws InternalServerException|NotFoundException
      */
-    public function getWallet($walletId): array
+    public function getWallet($walletId)
     {
         return static::handleResponse($this->sendRequest()->get(static::getUrl("wallets/{$walletId}")));
     }
 
     /**
      * @param string|int $walletId
-     * @param int|null $page
+     * @param int|string|array|null $page
      * @return mixed
      * @throws CPCashException
      * @throws InternalServerException|NotFoundException
      */
-    public function getWalletTransactions($walletId, ?int $page = 1)
+    public function getWalletTransactions($walletId, $page = 1)
     {
         return static::handleResponse(
             $this->sendRequest()->get(static::getUrl("wallets/{$walletId}/transactions?page={$page}"))
