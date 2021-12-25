@@ -25,11 +25,6 @@
             "CredPal\\CPCash\\": "src"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "CredPal\\CPCash\\Tests\\": "tests"
-        }
-    },
     "config": {
         "sort-packages": true
     },
