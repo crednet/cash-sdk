@@ -57,7 +57,7 @@ class CPCashController extends Controller
     public function getWalletTransactions($walletId): JsonResponse
     {
         return $this->successResponse(
-            CPCash::getWalletTransactions($walletId, request()->query('page', 1)),
+            CPCash::getWalletTransactions($walletId, request()->query('page')),
             trans('cpcash::wallet.transactions')
         );
     }
