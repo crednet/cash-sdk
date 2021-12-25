@@ -35,7 +35,28 @@ interface CPCash
     /**
      * @description Top up wallet
      * @param string $walletId
-     * @param string|int $amount
+     * @param string|int|float $amount
+     * @param string $provider
+     * @param string $description
+     * @param string $authorizationCode
+     * @param string $email
+     * @return array|mixed
+     * @throws CPCashException
+     * @throws InternalServerException
+     */
+    public function walletTopUp(
+        string $walletId,
+        $amount,
+        string $provider,
+        string $description,
+        string $authorizationCode,
+        string $email
+    ): array;
+
+    /**
+     * @description Top up wallet with reference
+     * @param string $walletId
+     * @param string|int|float $amount
      * @param string $provider
      * @param string $reference
      * @param string $description
@@ -43,7 +64,13 @@ interface CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public function walletTopUp(string $walletId, $amount, string $provider, string $reference, string $description): array;
+    public function walletTopUpWithReference(
+        string $walletId,
+        $amount,
+        string $provider,
+        string $reference,
+        string $description
+    ): array;
 
     /**
      * @description Withdraw wallet

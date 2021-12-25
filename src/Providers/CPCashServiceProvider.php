@@ -15,7 +15,8 @@ class CPCashServiceProvider extends ServiceProvider
         $this->app->singleton('cpcash',  CashService::class);
 
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/cpcash.php', 'cpcash'
+            __DIR__ . '/../../config/cpcash.php',
+            'cpcash'
         );
     }
 
@@ -27,11 +28,10 @@ class CPCashServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerRoutes()
-        ->registerConfig()
-        ->registerResources()
-        ->registerMiddleware()
-        ->registerMigrations();
-
+            ->registerConfig()
+            ->registerResources()
+            ->registerMiddleware()
+            ->registerMigrations();
     }
 
     protected function registerConfig(): CPCashServiceProvider
@@ -58,11 +58,11 @@ class CPCashServiceProvider extends ServiceProvider
 
     protected function registerResources(): CPCashServiceProvider
     {
-        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'cpcash');
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang', 'cpcash');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../../resources/lang' => resource_path('lang/vendor/cpcash'),
+                __DIR__ . '/../../resources/lang' => resource_path('lang/vendor/cpcash'),
             ], 'cpcash');
         }
 
@@ -71,7 +71,7 @@ class CPCashServiceProvider extends ServiceProvider
 
     protected function registerRoutes(): CPCashServiceProvider
     {
-        Route::group($this->routeConfiguration(), fn() => $this->loadRoutesFrom(__DIR__.'/../../routes/cpcash.php'));
+        Route::group($this->routeConfiguration(), fn () => $this->loadRoutesFrom(__DIR__ . '/../../routes/cpcash.php'));
 
         return $this;
     }

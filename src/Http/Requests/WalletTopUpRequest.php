@@ -3,6 +3,7 @@
 namespace CredPal\CPCash\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class WalletTopUpRequest extends FormRequest
 {
@@ -25,9 +26,10 @@ class WalletTopUpRequest extends FormRequest
     {
         return [
             'amount' => 'required|numeric',
-            'provider' => 'required|string',
-            'reference' => 'required',
-            'description' => 'nullable'
+            'provider' => 'required|string|max:50',
+            'reference' => 'required_without:card_id|string',
+            'description' => 'nullable',
+            'card_id' => ['required_without:reference', Rule::exists("personal_repayment_cards", 'id')]
         ];
     }
 }

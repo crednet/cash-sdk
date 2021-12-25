@@ -15,5 +15,7 @@ return [
 
     'prefix' => 'api/cash',
 
+    'cards_table' => env('PERSONAL_CARDS_TABLE', 'personal_repayment_cards'),
+
     'middleware' => ['api'],
 ];
