@@ -142,6 +142,30 @@ class CashService implements CPCash
     }
 
     /**
+     * @description Topup wallet with reward | referral | invest cashbacks
+     * @param string $walletId
+     * @param string $amount
+     * @param string $description
+     * @return array|mixed
+     * @throws CPCashException
+     * @throws InternalServerException
+     */
+    public function walletTopUpWithReward(
+        string $walletId,
+        $amount,
+        string $description,
+        string $category
+    ) {
+        $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/top-up-reward"), [
+            'amount' => $amount,
+            'provider' => $$description,
+            'reference' => $category,
+        ]);
+
+        return static::handleResponse($response);
+    }
+
+    /**
      * @description Withdraw wallet
      * @param string $walletId
      * @param string $amount
