@@ -25,11 +25,18 @@ class WalletTopUpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => 'required|numeric',
+            'amount' => 'required|numeric|min:100',
             'provider' => 'required|string|max:50',
             'reference' => 'required_without:card_id|string',
             'description' => 'nullable',
-            'card_id' => ['required_without:reference', Rule::exists("personal_repayment_cards", 'id')]
+            'card_id' => ['required_without:reference', Rule::exists('personal_repayment_cards', 'id')]
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'amount.min' => trans('cpcash::wallet.minimum_amount')
         ];
     }
 }

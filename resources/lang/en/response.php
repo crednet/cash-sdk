@@ -10,6 +10,7 @@ return [
         'withdraw' => 'Wallet Withdrawal Successful',
         'lock' => 'Wallet Locked Successfully',
         'unlock' => 'Wallet Unlocked Successfully',
-        'providers' => 'Wallet Payment Providers'
+        'providers' => 'Wallet Payment Providers',
+        'minimum_amount' => 'Minumum topup amount should be 100 and above'
     ]
 ];

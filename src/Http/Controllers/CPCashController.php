@@ -6,7 +6,12 @@ use CredPal\CPCash\Exceptions\{CPCashException, NotFoundException};
 use CredPal\CPCash\Facades\CPCash;
 use CredPal\CPCash\Traits\HasWalletAccount;
 use Illuminate\Http\JsonResponse;
-use CredPal\CPCash\Http\Requests\{CreateWalletRequest, WalletTopUpRequest, WalletWithdrawRequest};
+use CredPal\CPCash\Http\Requests\{
+    CreateWalletRequest,
+    WalletTopUpRequest,
+    WalletWithdrawRequest,
+    WalletTopUpWithRewardRequest
+};
 use Symfony\Component\HttpFoundation\Response;
 
 class CPCashController extends Controller
@@ -93,6 +98,23 @@ class CPCashController extends Controller
                 $request->input('provider'),
                 $request->input('reference'),
                 $request->input('description'),
+            ),
+            trans('cpcash::wallet.topup')
+        );
+    }
+
+    /**
+     * @param string|int $walletId
+     * @return JsonResponse
+     */
+    public function walletTopUpWithReward($walletId, WalletTopUpWithRewardRequest $request): JsonResponse
+    {
+        return $this->successResponse(
+            CPCash::walletTopUpWithReward(
+                $walletId,
+                $request->input('amount'),
+                $request->input('description'),
+                $request->input('category'),
             ),
             trans('cpcash::wallet.topup')
         );

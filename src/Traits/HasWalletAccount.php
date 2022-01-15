@@ -10,6 +10,17 @@ trait HasWalletAccount
 {
     /**
      * @param int|string $userId
+     *
+     * @return mixed
+     */
+    protected function getUserWallet($userId)
+    {
+        return DB::table('cpcash_wallets')->where(config('cpcash.user.column'), $userId)->first();
+    }
+
+    /**
+     * @param int|string $userId
+     *
      * @return bool
      */
     protected function userWalletExists($userId): bool
@@ -20,6 +31,7 @@ trait HasWalletAccount
     /**
      * @param mixed $response
      * @param int|string $userId
+     *
      * @return int
      */
     protected function storeWalletDetails($response, $userId): int
@@ -34,6 +46,7 @@ trait HasWalletAccount
     /**
      * @param int $userId
      * @param string $table
+     *
      * @return bool
      */
     protected function findUser(int $userId, string $table = 'users'): bool
@@ -44,8 +57,10 @@ trait HasWalletAccount
 
     /**
      * @param mixed $userId
+     *
      * @throws CPCashException
      * @throws NotFoundException
+     *
      * @return void
      */
     protected function isWalletConditionPassed($userId): void
@@ -62,11 +77,20 @@ trait HasWalletAccount
     /**
      * @param int $cardId
      * @param string $table
+     *
      * @return object|null
      */
     protected function findCard(int $cardId, string $table = "personal_repayment_cards"): ?object
     {
         // @phpstan-ignore-next-line
         return DB::table($table)->select(['authorization_code', 'email'])->whereId($cardId)->first();
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function table()
+    {
+        return DB::table('cpcash_wallets');
     }
 }
