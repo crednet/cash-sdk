@@ -144,8 +144,9 @@ class CashService implements CPCash
     /**
      * @description Topup wallet with reward | referral | invest cashbacks
      * @param string $walletId
-     * @param string $amount
+     * @param string|int|float $amount
      * @param string $description
+     * @param string $category
      * @return array|mixed
      * @throws CPCashException
      * @throws InternalServerException
@@ -158,8 +159,8 @@ class CashService implements CPCash
     ) {
         $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/top-up-reward"), [
             'amount' => $amount,
-            'provider' => $$description,
-            'reference' => $category,
+            'description' => $description,
+            'category' => $category,
         ]);
 
         return static::handleResponse($response);
