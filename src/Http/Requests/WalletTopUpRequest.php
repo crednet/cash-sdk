@@ -25,7 +25,7 @@ class WalletTopUpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => 'required|numeric|min:101',
+            'amount' => 'required|numeric|min:99',
             'provider' => 'required|string|max:50',
             'reference' => 'required_without:card_id|string',
             'description' => 'nullable',
