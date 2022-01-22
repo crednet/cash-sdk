@@ -14,9 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 class CashService implements CPCash
 {
     /**
-     * @var string
+     * @var string|null
      */
-    protected static string $token;
+    protected static ?string $token;
 
     /**
      * @var array
@@ -63,19 +63,19 @@ class CashService implements CPCash
      * @throws CPCashException
      * @throws InternalServerException|NotFoundException
      */
-    public function getWallet($walletId): array
+    public function getWallet($walletId)
     {
         return static::handleResponse($this->sendRequest()->get(static::getUrl("wallets/{$walletId}")));
     }
 
     /**
      * @param string|int $walletId
-     * @param int|null $page
+     * @param int|string|array|null $page
      * @return mixed
      * @throws CPCashException
      * @throws InternalServerException|NotFoundException
      */
-    public function getWalletTransactions($walletId, ?int $page = 1)
+    public function getWalletTransactions($walletId, $page = 1)
     {
         return static::handleResponse(
             $this->sendRequest()->get(static::getUrl("wallets/{$walletId}/transactions?page={$page}"))
@@ -101,7 +101,7 @@ class CashService implements CPCash
         string $description,
         string $authorizationCode,
         string $email
-    ): array {
+    ) {
         $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/top-up"), [
             'amount' => $amount,
             'provider' => $provider,
@@ -130,7 +130,7 @@ class CashService implements CPCash
         string $provider,
         string $reference,
         string $description
-    ): array {
+    ) {
         $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/top-up-reference"), [
             'amount' => $amount,
             'provider' => $provider,
@@ -138,6 +138,31 @@ class CashService implements CPCash
             'description' => $description
         ]);
         TransactionService::createTransaction($response, $amount, $walletId, $description, 'top-up-with-reference');
+
+        return static::handleResponse($response);
+    }
+
+    /**
+     * @description Topup wallet with reward | referral | invest cashbacks
+     * @param string $walletId
+     * @param string|int|float $amount
+     * @param string $description
+     * @param string $category
+     * @return array|mixed
+     * @throws CPCashException
+     * @throws InternalServerException
+     */
+    public function walletTopUpWithReward(
+        string $walletId,
+        $amount,
+        string $description,
+        string $category
+    ) {
+        $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/top-up-reward"), [
+            'amount' => $amount,
+            'description' => $description,
+            'category' => $category,
+        ]);
 
         return static::handleResponse($response);
     }
@@ -151,7 +176,7 @@ class CashService implements CPCash
      * @throws CPCashException
      * @throws InternalServerException|NotFoundException
      */
-    public function withdrawFromWallet(string $walletId, string $amount, string $description): array
+    public function withdrawFromWallet(string $walletId, string $amount, string $description)
     {
         $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/withdraw"), [
             'amount' => $amount,
@@ -168,7 +193,7 @@ class CashService implements CPCash
      * @throws CPCashException
      * @throws InternalServerException|NotFoundException
      */
-    public function lockWallet(string $walletId): array
+    public function lockWallet(string $walletId)
     {
         return static::handleResponse($this->sendRequest()->post(static::getUrl("wallets/{$walletId}/lock")));
     }
@@ -179,7 +204,7 @@ class CashService implements CPCash
      * @throws CPCashException
      * @throws InternalServerException|NotFoundException
      */
-    public function unlockWallet(string $walletId): array
+    public function unlockWallet(string $walletId)
     {
         return static::handleResponse($this->sendRequest()->post(static::getUrl("wallets/{$walletId}/unlock")));
     }
