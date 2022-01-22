@@ -137,6 +137,7 @@ class CashService implements CPCash
             'reference' => $reference,
             'description' => $description
         ]);
+        TransactionService::createTransaction($response, $amount, $walletId, $description, 'top-up-with-reference');
 
         return static::handleResponse($response);
     }
