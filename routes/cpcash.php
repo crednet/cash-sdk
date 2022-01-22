@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('create-wallet', [CPCashController::class, 'createWallet'])
     ->middleware('check-wallet-account');
-Route::post('top-up-wallet/{walletId}', [CPCashController::class, 'walletTopUp']);
-Route::post('top-up-wallet-reference/{walletId}', [CPCashController::class, 'walletTopUpWithReference']);
-Route::post('withdraw-wallet/{walletId}', [CPCashController::class, 'withdrawFromWallet']);
+Route::post('top-up-wallet/{walletId}', [CPCashController::class, 'walletTopUp'])->middleware(config('cpcash.feature_access_top_up'));
+Route::post('top-up-wallet-reference/{walletId}', [CPCashController::class, 'walletTopUpWithReference'])->middleware(config('cpcash.feature_access_top_up'));
+Route::post('withdraw-wallet/{walletId}', [CPCashController::class, 'withdrawFromWallet'])->middleware(config('cpcash.feature_access_withdraw'));
 
 Route::get('wallets', [CPCashController::class, 'getWallets']);
 Route::get('wallet/{walletId}', [CPCashController::class, 'getWallet']);
