@@ -186,6 +186,27 @@ class CashService implements CPCash
     }
 
     /**
+     * @description Withdraw wallet using Third party invest | payment
+     * @param string $walletId
+     * @param string $amount
+     * @param string $description
+     * @param string $category
+     * @return array|mixed
+     * @throws CPCashException
+     * @throws InternalServerException|NotFoundException
+     */
+    public function thirdPartyWithdraw(string $walletId, string $amount, string $description, string $category)
+    {
+        $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/third-party-withdraw"), [
+            'amount' => $amount,
+            'description' => $description,
+            'category' => $category
+        ]);
+
+        return static::handleResponse($response);
+    }
+
+    /**
      * @param string $walletId
      * @return array|mixed
      * @throws CPCashException
@@ -256,6 +277,14 @@ class CashService implements CPCash
 
         if ($response->status() === Response::HTTP_UNAUTHORIZED) {
             throw new CPCashException(trans('cpcash::exception.unauthorized'));
+        }
+
+        if ($response->status() === Response::HTTP_UNPROCESSABLE_ENTITY) {
+            throw new CPCashException(
+                'Invalid Data Provided',
+                Response::HTTP_UNPROCESSABLE_ENTITY,
+                $response->json('errors')
+            );
         }
 
         if ($response->status() === Response::HTTP_NOT_FOUND) {

@@ -101,6 +101,18 @@ interface CPCash
     public function withdrawFromWallet(string $walletId, string $amount, string $description);
 
     /**
+     * @description Withdraw wallet using Third party invest | payment
+     * @param string $walletId
+     * @param string $amount
+     * @param string $description
+     * @param string $category
+     * @return array|mixed
+     * @throws CPCashException
+     * @throws InternalServerException|NotFoundException
+     */
+    public function thirdPartyWithdraw(string $walletId, string $amount, string $description, string $category);
+
+    /**
      * @param string $walletId
      * @return array|mixed
      * @throws CPCashException
