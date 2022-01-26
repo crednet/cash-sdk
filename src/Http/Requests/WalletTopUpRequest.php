@@ -25,7 +25,7 @@ class WalletTopUpRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => 'required|numeric|min:100',
+            'amount' => 'required|numeric|min:99',
             'provider' => 'required|string|max:50',
             'reference' => 'required_without:card_id|string',
             'description' => 'nullable',
@@ -36,7 +36,7 @@ class WalletTopUpRequest extends FormRequest
     public function messages()
     {
         return [
-            'amount.min' => trans('cpcash::wallet.minimum_amount')
+            'amount.min' => 'Minumum topup amount should be 100 and above'
         ];
     }
 }
