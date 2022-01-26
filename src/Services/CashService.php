@@ -193,8 +193,7 @@ class CashService implements CPCash
      * @param string $description
      * @param string $category
      * @return array|mixed
-     * @throws CPCashException
-     * @throws InternalServerException|NotFoundException
+     * @throws InternalServerException|CPCashException
      */
     public function thirdPartyWithdraw(string $walletId, string $amount, string $description, string $category)
     {

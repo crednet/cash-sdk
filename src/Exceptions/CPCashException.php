@@ -31,7 +31,8 @@ class CPCashException extends Exception
     public function render(): JsonResponse
     {
         $response = ['success' => false, 'message' => $this->message];
-        count($this->errors) > 0 && $response['errors'] = $this->errors;
+        if (count($this->errors) > 0)
+            $response['errors'] = $this->errors;
 
         return response()->json($response, $this->code);
     }
