@@ -112,6 +112,15 @@ interface CPCash
     public function thirdPartyWithdraw(string $walletId, string $amount, string $description, string $category);
 
     /**
+     * @description Generate top up reference for payment
+     *
+     * @param string $walletId
+     * @return array|mixed
+     * @throws InternalServerException|CPCashException
+     */
+    public function generateTopUpReference(string $walletId);
+
+    /**
      * @param string $walletId
      * @return array|mixed
      * @throws CPCashException

@@ -124,6 +124,18 @@ class CPCashController extends Controller
      * @param string|int $walletId
      * @return JsonResponse
      */
+    public function generateTopUpReference($walletId): JsonResponse
+    {
+        return $this->successResponse(
+            CPCash::generateTopUpReference($walletId),
+            __('Reference Generated Successfully')
+        );
+    }
+
+    /**
+     * @param string|int $walletId
+     * @return JsonResponse
+     */
     public function withdrawFromWallet($walletId, WalletWithdrawRequest $request): JsonResponse
     {
         return $this->successResponse(
