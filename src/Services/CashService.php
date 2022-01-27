@@ -211,8 +211,7 @@ class CashService implements CPCash
      *
      * @param string $walletId
      * @return array|mixed
-     * @throws CPCashException
-     * @throws InternalServerException|NotFoundException
+     * @throws InternalServerException|CPCashException
      */
     public function generateTopUpReference(string $walletId)
     {
