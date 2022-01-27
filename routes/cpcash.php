@@ -8,6 +8,7 @@ Route::post('create-wallet', [CPCashController::class, 'createWallet'])
 Route::post('top-up-wallet/{walletId}', [CPCashController::class, 'walletTopUp']);
 Route::post('top-up-wallet-reference/{walletId}', [CPCashController::class, 'walletTopUpWithReference']);
 Route::post('withdraw-wallet/{walletId}', [CPCashController::class, 'withdrawFromWallet']);
+Route::get('generate-top-up-reference/{walletId}', [CPCashController::class, 'generateTopUpReference']);
 
 Route::get('wallets', [CPCashController::class, 'getWallets']);
 Route::get('wallet/{walletId}', [CPCashController::class, 'getWallet']);

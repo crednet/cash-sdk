@@ -43,7 +43,7 @@ class CashService implements CPCash
      */
     public function createWallet()
     {
-        return static::handleResponse($this->sendRequest()->post(static::getUrl('wallets')));
+        return static::handleResponse($this->sendRequest()->post(static::getUrl('')));
     }
 
     /**
@@ -53,7 +53,7 @@ class CashService implements CPCash
      */
     public function getWallets()
     {
-        return static::handleResponse($this->sendRequest()->get(static::getUrl('wallets')));
+        return static::handleResponse($this->sendRequest()->get(static::getUrl('')));
     }
 
     /**
@@ -65,7 +65,7 @@ class CashService implements CPCash
      */
     public function getWallet($walletId)
     {
-        return static::handleResponse($this->sendRequest()->get(static::getUrl("wallets/{$walletId}")));
+        return static::handleResponse($this->sendRequest()->get(static::getUrl("{$walletId}")));
     }
 
     /**
@@ -78,7 +78,7 @@ class CashService implements CPCash
     public function getWalletTransactions($walletId, $page = 1)
     {
         return static::handleResponse(
-            $this->sendRequest()->get(static::getUrl("wallets/{$walletId}/transactions?page={$page}"))
+            $this->sendRequest()->get(static::getUrl("{$walletId}/transactions?page={$page}"))
         );
     }
 
@@ -102,7 +102,7 @@ class CashService implements CPCash
         string $authorizationCode,
         string $email
     ) {
-        $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/top-up"), [
+        $response = $this->sendRequest()->post(static::getUrl("{$walletId}/top-up"), [
             'amount' => $amount,
             'provider' => $provider,
             'description' => $description,
@@ -131,7 +131,7 @@ class CashService implements CPCash
         string $reference,
         string $description
     ) {
-        $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/top-up-reference"), [
+        $response = $this->sendRequest()->post(static::getUrl("{$walletId}/top-up-reference"), [
             'amount' => $amount,
             'provider' => $provider,
             'reference' => $reference,
@@ -157,7 +157,7 @@ class CashService implements CPCash
         string $description,
         string $category
     ) {
-        $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/top-up-reward"), [
+        $response = $this->sendRequest()->post(static::getUrl("{$walletId}/top-up-reward"), [
             'amount' => $amount,
             'description' => $description,
             'category' => $category,
@@ -177,7 +177,7 @@ class CashService implements CPCash
      */
     public function withdrawFromWallet(string $walletId, string $amount, string $description)
     {
-        $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/withdraw"), [
+        $response = $this->sendRequest()->post(static::getUrl("{$walletId}/withdraw"), [
             'amount' => $amount,
             'description' => $description,
             'category' => 'withdrawal'
@@ -197,13 +197,28 @@ class CashService implements CPCash
      */
     public function thirdPartyWithdraw(string $walletId, string $amount, string $description, string $category)
     {
-        $response = $this->sendRequest()->post(static::getUrl("wallets/{$walletId}/third-party-withdraw"), [
+        $response = $this->sendRequest()->post(static::getUrl("{$walletId}/third-party-withdraw"), [
             'amount' => $amount,
             'description' => $description,
             'category' => $category
         ]);
 
         return static::handleResponse($response);
+    }
+
+    /**
+     * @description Generate top up reference for payment
+     *
+     * @param string $walletId
+     * @return array|mixed
+     * @throws CPCashException
+     * @throws InternalServerException|NotFoundException
+     */
+    public function generateTopUpReference(string $walletId)
+    {
+        return static::handleResponse(
+            $this->sendRequest()->post(static::getUrl("{$walletId}/generate-top-up-reference"))
+        );
     }
 
     /**
@@ -214,7 +229,7 @@ class CashService implements CPCash
      */
     public function lockWallet(string $walletId)
     {
-        return static::handleResponse($this->sendRequest()->post(static::getUrl("wallets/{$walletId}/lock")));
+        return static::handleResponse($this->sendRequest()->post(static::getUrl("{$walletId}/lock")));
     }
 
     /**
@@ -225,7 +240,7 @@ class CashService implements CPCash
      */
     public function unlockWallet(string $walletId)
     {
-        return static::handleResponse($this->sendRequest()->post(static::getUrl("wallets/{$walletId}/unlock")));
+        return static::handleResponse($this->sendRequest()->post(static::getUrl("{$walletId}/unlock")));
     }
 
     /**
@@ -275,15 +290,15 @@ class CashService implements CPCash
             throw new InternalServerException(trans('cpcash::exception.internal-error'));
         }
 
-        if ($response->status() === Response::HTTP_UNAUTHORIZED) {
+        if ($response->unauthorized()) {
             throw new CPCashException(trans('cpcash::exception.unauthorized'));
         }
 
         if ($response->status() === Response::HTTP_UNPROCESSABLE_ENTITY) {
             throw new CPCashException(
-                'Invalid Data Provided',
+                __('Invalid Data Provided'),
                 Response::HTTP_UNPROCESSABLE_ENTITY,
-                $response->json('errors')
+                $response->json('data')['errors']
             );
         }
 
@@ -316,6 +331,6 @@ class CashService implements CPCash
     {
         static::$url = config('cpcash.base_url');
 
-        return trim(static::$url . $uri);
+        return trim(static::$url . 'wallets/' . $uri);
     }
 }

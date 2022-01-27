@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static array|mixed thirdPartyWithdraw(string $walletId, string $amount, string $description, string $category)
  * @method static array|mixed lockWallet(string $walletId)
  * @method static array|mixed unlockWallet(string $walletId)
+ * @method static array|mixed generateTopUpReference(string $walletId)
  * @method static mixed getProviders()
  *
  * @see \CredPal\CPCash\Contracts\CPCash
