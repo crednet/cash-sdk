@@ -33,4 +33,23 @@ class Controller extends BaseController
             "message" => $message
         ], $statusCode);
     }
+
+    /**
+     * @param mixed $data
+     * @param string $message
+     * @param int $statusCode
+     * @return JsonResponse
+     */
+    public function datatableResponse(
+        $data,
+        string $message = "Operation Successful",
+        $statusCode = Response::HTTP_OK
+    ): JsonResponse
+    {
+        return response()->json([
+            "success" => true,
+            "datatable" => $data,
+            "message" => $message
+        ], $statusCode);
+    }
 }
