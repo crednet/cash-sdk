@@ -70,15 +70,18 @@ class CashService implements CPCash
 
     /**
      * @param string|int $walletId
-     * @param int|string|array|null $page
+     * @param int|string|array|null $pageNo
      * @return mixed
      * @throws CPCashException
      * @throws InternalServerException|NotFoundException
      */
-    public function getWalletTransactions($walletId, $page = 1)
+    public function getWalletTransactions($walletId, $pageNo = 1)
     {
+        $page = request()->query('page');
+        $limit = request()->query('limit');
+
         return static::handleResponse(
-            $this->sendRequest()->get(static::getUrl("{$walletId}/transactions?page={$page}"))
+            $this->sendRequest()->get(static::getUrl("{$walletId}/transactions?page={$page}&limit={$limit}"))
         );
     }
 
@@ -257,7 +260,7 @@ class CashService implements CPCash
      */
     public function sendRequest(): PendingRequest
     {
-        return Http::timeout(60)->withHeaders(static::$headers);
+        return Http::timeout(20)->withHeaders(static::$headers);
     }
 
     /**
@@ -272,7 +275,9 @@ class CashService implements CPCash
             static::handleErrorResponse($response);
         }
 
-        return $response->json('data')['data'];
+        $data = $response->json('data');
+
+        return isset($data['datatable']) ? $data['datatable'] : $data['data'];
     }
 
     /**
