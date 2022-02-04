@@ -294,7 +294,7 @@ class CashService implements CPCash
             throw new InternalServerException(trans('cpcash::exception.internal-error'));
         }
 
-        if ($response->unauthorized()) {
+        if ($response->status() === Response::HTTP_UNAUTHORIZED) {
             throw new CPCashException(trans('cpcash::exception.unauthorized'));
         }
 
