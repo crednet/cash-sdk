@@ -289,12 +289,13 @@ class CashService implements CPCash
      */
     final protected static function handleErrorResponse($response): void
     {
+        Log::info($response);
+
         if ($response->status() >= Response::HTTP_INTERNAL_SERVER_ERROR) {
-            Log::info($response);
             throw new InternalServerException(trans('cpcash::exception.internal-error'));
         }
 
-        if ($response->unauthorized()) {
+        if ($response->status() === Response::HTTP_UNAUTHORIZED) {
             throw new CPCashException(trans('cpcash::exception.unauthorized'));
         }
 
