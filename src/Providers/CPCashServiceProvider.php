@@ -47,7 +47,7 @@ class CPCashServiceProvider extends ServiceProvider
 
     protected function registerMigrations(): CPCashServiceProvider
     {
-        if ($this->app->runningInConsole() && !class_exists('CreateCpcashWalletsTable')) {
+        if (! class_exists('CreateCpcashWalletsTable')) {
             $this->publishes([
                 __DIR__ . '/../../database/migrations/create_cpcash_wallets_table.stub' => database_path('migrations/' . date('Y_m_d_His') . '_create_cpcash_wallets_table.php'),
             ], 'migrations');
