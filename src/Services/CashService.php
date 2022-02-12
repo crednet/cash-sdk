@@ -170,6 +170,21 @@ class CashService implements CPCash
     }
 
     /**
+     * @description Update a wallet's transaction status
+     *
+     * @param string $walletId
+     * @param string $reference
+     * @param string $status
+     * @return array|mixed
+     * @throws InternalServerException|CPCashException
+     */
+    public function updateWalletTransactionByReference(string $walletId, string $reference, string $status)
+    {
+        return static::handleResponse($this->sendRequest()
+        ->post(static::getUrl("{$walletId}/transactions/{$reference}"), ['status' => $status]));
+    }
+
+    /**
      * @description Withdraw wallet
      * @param string $walletId
      * @param string $amount

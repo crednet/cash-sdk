@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static mixed createWallet()
+ * @method static mixed getWallets()
  * @method static mixed getWalletTransactions($walletId, $page)
  * @method static array|mixed getWallet(string $walletId);
  * @method static array|mixed walletTopUp(string $walletId, $amount, string $provider, string $reference, string $description)
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static array|mixed lockWallet(string $walletId)
  * @method static array|mixed unlockWallet(string $walletId)
  * @method static array|mixed generateTopUpReference(string $walletId)
+ * @method static array|mixed updateWalletTransactionByReference(string $walletId, string $reference, string $status)
  * @method static mixed getProviders()
  *
  * @see \CredPal\CPCash\Contracts\CPCash
