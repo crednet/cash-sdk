@@ -3,7 +3,7 @@
 namespace CredPal\CPCash\Providers;
 
 use CredPal\CPCash\Http\Middleware\CheckWalletAccount;
-use CredPal\CPCash\Services\CashService;
+use CredPal\CPCash\Services\{CashService, VirtualAccountService};
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -13,6 +13,7 @@ class CPCashServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('cpcash',  CashService::class);
+        $this->app->singleton('virtual-account', VirtualAccountService::class);
 
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/cpcash.php',
