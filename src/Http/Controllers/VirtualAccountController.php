@@ -12,7 +12,6 @@ class CPCashController extends Controller
     /**
      * int|string $walletId
      * @return JsonResponse
-     * @throws CPCashException
      */
     public function __invoke($walletId, Request $request): JsonResponse
     {
