@@ -4,6 +4,7 @@ namespace CredPal\CPCash\Providers;
 
 use CredPal\CPCash\Http\Middleware\CheckWalletAccount;
 use CredPal\CPCash\Services\CashService;
+use CredPal\CPCash\Contracts\CPCash;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -13,6 +14,8 @@ class CPCashServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('cpcash',  CashService::class);
+
+        $this->app->bind(CPCash::class, CashService::class);
 
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/cpcash.php',
@@ -47,7 +50,7 @@ class CPCashServiceProvider extends ServiceProvider
 
     protected function registerMigrations(): CPCashServiceProvider
     {
-        if (! class_exists('CreateCpcashWalletsTable')) {
+        if (!class_exists('CreateCpcashWalletsTable')) {
             $this->publishes([
                 __DIR__ . '/../../database/migrations/create_cpcash_wallets_table.stub' => database_path('migrations/' . date('Y_m_d_His') . '_create_cpcash_wallets_table.php'),
             ], 'migrations');

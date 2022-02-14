@@ -1,6 +1,7 @@
 <?php
 
 use CredPal\CPCash\Http\Controllers\CPCashController;
+use CredPal\CPCash\Http\Controllers\VirtualAccountController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('create-wallet', [CPCashController::class, 'createWallet'])
@@ -18,3 +19,7 @@ Route::post('lock/{walletId}', [CPCashController::class, 'lockWallet']);
 Route::post('unlock/{walletId}', [CPCashController::class, 'unlockWallet']);
 
 Route::get('providers', [CPCashController::class, 'getWalletProviders']);
+
+Route::prefix('virtual-accounts')->group(function () {
+    Route::post('{walletId}/transfer', [VirtualAccountController::class]);
+});

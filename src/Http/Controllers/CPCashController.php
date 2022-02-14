@@ -35,6 +35,7 @@ class CPCashController extends Controller
             Response::HTTP_CREATED
         );
     }
+
     /**
      * @return JsonResponse
      */
