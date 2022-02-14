@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static array|mixed generateTopUpReference(string $walletId)
  * @method static array|mixed updateWalletTransactionByReference(string $walletId, string $reference, string $status)
  * @method static mixed getProviders()
+ * @method static array|mixed public function transferFunds(string $walletId, $amount, $accountNumber, $bankCode, string $description, string $reference)
+ * @method static array|mixed public function createVirtualAccount(string $walletId, int $userId, string $firstName, string $lastName, ?string $middleName)
  *
  * @see \CredPal\CPCash\Contracts\CPCash
  */
