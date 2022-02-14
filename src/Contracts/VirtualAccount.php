@@ -2,6 +2,9 @@
 
 namespace CredPal\CPCash\Contracts;
 
+use CredPal\CPCash\Exceptions\CPCashException;
+use CredPal\CPCash\Exceptions\InternalServerException;
+
 interface VirtualAccount
 {
     /**
