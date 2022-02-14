@@ -2,7 +2,7 @@
 
 namespace CredPal\CPCash\Services;
 
-use CredPal\CPCash\Contracts\CPCash;
+use CredPal\CPCash\Contracts\{CPCash, VirtualAccount};
 use CredPal\CPCash\Exceptions\CPCashException;
 use CredPal\CPCash\Exceptions\NotFoundException;
 use Illuminate\Http\Client\PendingRequest;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 use CredPal\CPCash\Exceptions\InternalServerException;
 use Symfony\Component\HttpFoundation\Response;
 
-class CashService implements CPCash
+class CashService implements CPCash, VirtualAccount
 {
     /**
      * @var string|null
@@ -145,6 +145,7 @@ class CashService implements CPCash
     }
 
     /**
+     * @depreciated removing soon
      * @description Topup wallet with reward | referral | invest cashbacks
      * @param string $walletId
      * @param string|int|float $amount
@@ -155,6 +156,31 @@ class CashService implements CPCash
      * @throws InternalServerException
      */
     public function walletTopUpWithReward(
+        string $walletId,
+        $amount,
+        string $description,
+        string $category
+    ) {
+        $response = $this->sendRequest()->post(static::getUrl("{$walletId}/top-up-reward"), [
+            'amount' => $amount,
+            'description' => $description,
+            'category' => $category,
+        ]);
+
+        return static::handleResponse($response);
+    }
+
+    /**
+     * @description Topup wallet with reward | referral | invest cashbacks | virtual-card
+     * @param string $walletId
+     * @param string|int|float $amount
+     * @param string $description
+     * @param string $category
+     * @return array|mixed
+     * @throws CPCashException
+     * @throws InternalServerException
+     */
+    public function thirdPartyWalletTopUp(
         string $walletId,
         $amount,
         string $description,
@@ -181,7 +207,7 @@ class CashService implements CPCash
     public function updateWalletTransactionByReference(string $walletId, string $reference, string $status)
     {
         return static::handleResponse($this->sendRequest()
-        ->post(static::getUrl("{$walletId}/transactions/{$reference}"), ['status' => $status]));
+            ->put(static::getUrl("{$walletId}/transactions/{$reference}"), ['status' => $status]));
     }
 
     /**
@@ -271,6 +297,63 @@ class CashService implements CPCash
     }
 
     /**
+     *
+     * @param string $walletId
+     * @param int $userId
+     * @param string $firstName
+     * @param string $lastName
+     * @param string|null $middleName
+     * @return array|mixed
+     * @throws InternalServerException|CPCashException
+     */
+    public function createVirtualAccount(
+        string $walletId,
+        int $userId,
+        string $firstName,
+        string $lastName,
+        ?string $middleName
+    ) {
+        $response = $this->sendRequest()->post(static::getUrl("{$walletId}/virtual-accounts"), [
+            'user_id' => $userId,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'middle_name' => $middleName
+        ]);
+
+        return static::handleResponse($response);
+    }
+
+    /**
+     *
+     * @param string $walletId
+     * @param float|int $amount
+     * @param int|string $accountNumber
+     * @param int|string $bankCode
+     * @param string $description
+     * @param string $reference
+     * @return array|mixed
+     * @throws InternalServerException|CPCashException
+     */
+    public function transferFunds(
+        string $walletId,
+        $amount,
+        $accountNumber,
+        $bankCode,
+        string $description,
+        string $reference
+    ) {
+        $response = $this->sendRequest()->post(static::getUrl("{$walletId}/virtual-accounts/funds-transfer"), [
+            'amount' => $amount,
+            'account_number' => $accountNumber,
+            'bank_code' => $bankCode,
+            'description' => $description,
+            'reference' => $reference
+        ]);
+
+        return static::handleResponse($response);
+    }
+
+    /**
      * @return PendingRequest
      */
     public function sendRequest(): PendingRequest
@@ -292,7 +375,11 @@ class CashService implements CPCash
 
         $data = $response->json('data');
 
-        return isset($data['datatable']) ? $data['datatable'] : $data['data'];
+        return (isset($data['datatable']) ?
+            $data['datatable']
+            : isset($data['data']))
+            ? $data['data']
+            : $data;
     }
 
     /**
