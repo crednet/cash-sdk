@@ -54,23 +54,6 @@ interface CPCash
     );
 
     /**
-     * @description Top up wallet
-     * @param string $walletId
-     * @param string|int|float $amount
-     * @param string $description
-     * @param string $category
-     * @return array|mixed
-     * @throws CPCashException
-     * @throws InternalServerException
-     */
-    public function walletTopUpWithReward(
-        string $walletId,
-        $amount,
-        string $description,
-        string $category
-    );
-
-    /**
      * @description Top up wallet with reference
      * @param string $walletId
      * @param string|int|float $amount

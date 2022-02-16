@@ -145,32 +145,6 @@ class CashService implements CPCash, VirtualAccount
     }
 
     /**
-     * @depreciated removing soon
-     * @description Topup wallet with reward | referral | invest cashbacks
-     * @param string $walletId
-     * @param string|int|float $amount
-     * @param string $description
-     * @param string $category
-     * @return array|mixed
-     * @throws CPCashException
-     * @throws InternalServerException
-     */
-    public function walletTopUpWithReward(
-        string $walletId,
-        $amount,
-        string $description,
-        string $category
-    ) {
-        $response = $this->sendRequest()->post(static::getUrl("{$walletId}/top-up-reward"), [
-            'amount' => $amount,
-            'description' => $description,
-            'category' => $category,
-        ]);
-
-        return static::handleResponse($response);
-    }
-
-    /**
      * @description Topup wallet with reward | referral | invest cashbacks | virtual-card
      * @param string $walletId
      * @param string|int|float $amount
@@ -231,7 +205,7 @@ class CashService implements CPCash, VirtualAccount
     }
 
     /**
-     * @description Withdraw wallet using Third party invest | payment
+     * @description Withdraw wallet using Third party invest | payment | virtual-card
      * @param string $walletId
      * @param string $amount
      * @param string $description
