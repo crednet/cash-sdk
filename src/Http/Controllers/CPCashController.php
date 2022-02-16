@@ -108,10 +108,10 @@ class CPCashController extends Controller
      * @param string|int $walletId
      * @return JsonResponse
      */
-    public function walletTopUpWithReward($walletId, WalletTopUpWithRewardRequest $request): JsonResponse
+    public function thirdPartyWalletTopUp($walletId, WalletTopUpWithRewardRequest $request): JsonResponse
     {
         return $this->successResponse(
-            CPCash::walletTopUpWithReward(
+            CPCash::thirdPartyWalletTopUp(
                 $walletId,
                 $request->input('amount'),
                 $request->input('description'),
