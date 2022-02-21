@@ -349,11 +349,13 @@ class CashService implements CPCash, VirtualAccount
 
         $data = $response->json('data');
 
-        return (isset($data['datatable']) ?
-            $data['datatable']
-            : isset($data['data']))
-            ? $data['data']
-            : $data;
+        if (isset($data['datatable'])) {
+            return $data['datatable'];
+        } else if (isset($data['data'])) {
+            return $data['data'];
+        } else {
+            return $data;
+        }
     }
 
     /**
