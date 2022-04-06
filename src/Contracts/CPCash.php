@@ -84,7 +84,7 @@ interface CPCash
     public function withdrawFromWallet(string $walletId, string $amount, string $description);
 
     /**
-     * @description Withdraw wallet
+     * @description Debit wallet
      * @param string $walletId
      * @param string $amount
      * @param string $description
