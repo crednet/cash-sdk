@@ -205,25 +205,6 @@ class CashService implements CPCash, VirtualAccount
     }
 
     /**
-     * @description Debit a wallet
-     * @param string $walletId
-     * @param string $amount
-     * @param string $description
-     * @return array|mixed
-     * @throws CPCashException
-     * @throws InternalServerException|NotFoundException
-     */
-    public function debitWallet(string $walletId, string $amount, string $description)
-    {
-        $response = $this->sendRequest()->post(static::getUrl("{$walletId}/debit"), [
-            'amount' => $amount,
-            'description' => $description,
-        ]);
-
-        return static::handleResponse($response);
-    }
-
-    /**
      * @description Withdraw wallet using Third party invest | payment | virtual-card
      * @param string $walletId
      * @param string $amount

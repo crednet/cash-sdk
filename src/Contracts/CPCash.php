@@ -84,17 +84,6 @@ interface CPCash
     public function withdrawFromWallet(string $walletId, string $amount, string $description);
 
     /**
-     * @description Debit wallet
-     * @param string $walletId
-     * @param string $amount
-     * @param string $description
-     * @return array|mixed
-     * @throws CPCashException
-     * @throws InternalServerException
-     */
-    public function debitWallet(string $walletId, string $amount, string $description);
-
-    /**
      * @description Withdraw wallet using Third party invest | payment
      * @param string $walletId
      * @param string $amount
