@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use CredPal\CPCash\Facades\CPCash;
 use Symfony\Component\HttpFoundation\Response;
 
-class CPCashController extends Controller
+class VirtualAccountController extends Controller
 {
     /**
      * int|string $walletId
