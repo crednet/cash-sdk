@@ -43,7 +43,7 @@ class CashService implements CPCash, VirtualAccount
      */
     public function createWallet()
     {
-        return static::handleResponse($this->sendRequest()->post(static::getUrl('')));
+        return static::handleResponse($this->sendRequest()->post(static::getUrl('create')));
     }
 
     /**
