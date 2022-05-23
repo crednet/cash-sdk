@@ -75,12 +75,12 @@ trait HasWalletAccount
     }
 
     /**
-     * @param int $cardId
+     * @param int|string $cardId
      * @param string $table
      *
      * @return object|null
      */
-    protected function findCard(int $cardId, string $table = "personal_repayment_cards"): ?object
+    protected function findCard($cardId, string $table = "personal_repayment_cards"): ?object
     {
         // @phpstan-ignore-next-line
         return DB::table($table)->select(['authorization_code', 'email'])->whereId($cardId)->first();
