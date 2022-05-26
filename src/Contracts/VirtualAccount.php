@@ -7,25 +7,25 @@ use CredPal\CPCash\Exceptions\InternalServerException;
 
 interface VirtualAccount
 {
-	/**
-	 *
-	 * @param string $walletId
-	 * @param int $userId
-	 * @param string $firstName
-	 * @param string $lastName
-	 * @param string|null $middleName
-	 * @param string|null $email
-	 * @return array|mixed
-	 * @throws InternalServerException
-	 * @throws CPCashException
-	 */
+    /**
+     *
+     * @param string $walletId
+     * @param int $userId
+     * @param string $firstName
+     * @param string $lastName
+     * @param string|null $middleName
+     * @param string|null $email
+     * @return array|mixed
+     * @throws InternalServerException
+     * @throws CPCashException
+     */
     public function createVirtualAccount(
         string $walletId,
         int $userId,
         string $firstName,
         string $lastName,
         ?string $middleName,
-		?string $email
+        ?string $email
     );
 
     /**
