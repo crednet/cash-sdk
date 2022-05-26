@@ -14,15 +14,18 @@ interface VirtualAccount
      * @param string $firstName
      * @param string $lastName
      * @param string|null $middleName
+     * @param string|null $email
      * @return array|mixed
-     * @throws InternalServerException|CPCashException
+     * @throws InternalServerException
+     * @throws CPCashException
      */
     public function createVirtualAccount(
         string $walletId,
         int $userId,
         string $firstName,
         string $lastName,
-        ?string $middleName
+        ?string $middleName,
+        ?string $email
     );
 
     /**

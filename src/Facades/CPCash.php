@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static array|mixed updateWalletTransactionByReference(string $walletId, string $reference, string $status)
  * @method static mixed getProviders()
  * @method static array|mixed transferFunds(string $walletId, $amount, $accountNumber, $bankCode, string $description, string $reference)
- * @method static array|mixed createVirtualAccount(string $walletId, int $userId, string $firstName, string $lastName, ?string $middleName)
+ * @method static array|mixed createVirtualAccount(string $walletId, int $userId, string $firstName, string $lastName, ?string $middleName, ?string $email)
  *
  * @see \CredPal\CPCash\Contracts\CPCash
  */

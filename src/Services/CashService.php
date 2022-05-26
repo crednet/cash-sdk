@@ -277,21 +277,24 @@ class CashService implements CPCash, VirtualAccount
      * @param string $firstName
      * @param string $lastName
      * @param string|null $middleName
+     * @param string|null $email
      * @return array|mixed
-     * @throws InternalServerException|CPCashException
+     * @throws CPCashException|InternalServerException|NotFoundException
      */
     public function createVirtualAccount(
         string $walletId,
         int $userId,
         string $firstName,
         string $lastName,
-        ?string $middleName
+        ?string $middleName,
+        ?string $email
     ) {
         $response = $this->sendRequest()->post(static::getUrl("{$walletId}/virtual-accounts"), [
             'user_id' => $userId,
             'first_name' => $firstName,
             'last_name' => $lastName,
-            'middle_name' => $middleName
+            'middle_name' => $middleName,
+            'email' => $email
         ]);
 
         return static::handleResponse($response);
