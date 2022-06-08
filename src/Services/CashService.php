@@ -223,7 +223,24 @@ class CashService implements CPCash, VirtualAccount
 
         return static::handleResponse($response);
     }
+    /**
+     * @description Debit a wallet
+     * @param string $walletId
+     * @param string $amount
+     * @param string $description
+     * @return array|mixed
+     * @throws CPCashException
+     * @throws InternalServerException|NotFoundException
+     */
+    public function debitWallet(string $walletId, string $amount, string $description)
+    {
+        $response = $this->sendRequest()->post(static::getUrl("{$walletId}/debit"), [
+            'amount' => $amount,
+            'description' => $description,
+        ]);
 
+        return static::handleResponse($response);
+    }
     /**
      * @description Generate top up reference for payment
      *
