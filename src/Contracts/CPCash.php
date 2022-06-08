@@ -103,7 +103,7 @@ interface CPCash
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public function debitWallet(string $walletId, string $amount, string $description);
+    public function debitWallet(string $walletId, $amount, string $description);
 
     /**
      * @description Generate top up reference for payment
