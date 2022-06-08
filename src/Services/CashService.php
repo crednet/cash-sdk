@@ -226,7 +226,7 @@ class CashService implements CPCash, VirtualAccount
     /**
      * @description Debit a wallet
      * @param string $walletId
-     * @param string $amount
+     * @param float|int|string $amount
      * @param string $description
      * @return array|mixed
      * @throws CPCashException
