@@ -232,7 +232,7 @@ class CashService implements CPCash, VirtualAccount
      * @throws CPCashException
      * @throws InternalServerException|NotFoundException
      */
-    public function debitWallet(string $walletId, string $amount, string $description)
+    public function debitWallet(string $walletId, $amount, string $description)
     {
         $response = $this->sendRequest()->post(static::getUrl("{$walletId}/debit"), [
             'amount' => $amount,
