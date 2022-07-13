@@ -125,13 +125,14 @@ interface CPCash
      */
     public function updateWalletTransactionByReference(string $walletId, string $reference, string $status);
 
-    /**
-     * @param string $walletId
-     * @return array|mixed
-     * @throws CPCashException
-     * @throws InternalServerException
-     */
-    public function lockWallet(string $walletId);
+	/**
+	 * @param string $walletId
+	 * @param array $data
+	 * @return array|mixed
+	 * @throws CPCashException
+	 * @throws InternalServerException
+	 */
+    public function lockWallet(string $walletId, array $data);
 
     /**
      * @param string $walletId
