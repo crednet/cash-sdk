@@ -7,10 +7,11 @@ use CredPal\CPCash\Facades\CPCash;
 use CredPal\CPCash\Traits\HasWalletAccount;
 use Illuminate\Http\JsonResponse;
 use CredPal\CPCash\Http\Requests\{
+	LockRequest,
     CreateWalletRequest,
     WalletTopUpRequest,
     WalletWithdrawRequest,
-    WalletTopUpWithRewardRequest
+    WalletTopUpWithRewardRequest,
 };
 use Symfony\Component\HttpFoundation\Response;
 
@@ -147,11 +148,12 @@ class CPCashController extends Controller
 
     /**
      * @param int|string $walletId
+	 * @param LockRequest $request
      * @return JsonResponse
      */
-    public function lockWallet($walletId): JsonResponse
+    public function lockWallet($walletId, LockRequest $request): JsonResponse
     {
-        return $this->successResponse(CPCash::lockWallet($walletId), trans('cpcash::wallet.lock'));
+        return $this->successResponse(CPCash::lockWallet($walletId, $request->validated()), trans('cpcash::wallet.lock'));
     }
 
     /**
