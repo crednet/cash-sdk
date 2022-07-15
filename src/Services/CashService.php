@@ -185,6 +185,21 @@ class CashService implements CPCash, VirtualAccount
     }
 
     /**
+     * @description Refund the specified transaction.
+     *
+     * @param string $walletId
+     * @param string $reference
+     * @return array|mixed
+     * @throws InternalServerException|CPCashException|NotFoundException
+     */
+    public function refundTransaction(string $walletId, string $reference)
+    {
+        return static::handleResponse(
+            $this->sendRequest()->post(static::getUrl("{$walletId}/transactions/{$reference}/refund"))
+        );
+    }
+
+    /**
      * @description Withdraw wallet
      * @param string $walletId
      * @param string $amount

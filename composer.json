@@ -8,11 +8,16 @@
         {
             "name": "Damilare Anjorin",
             "email": "damilareanjorin1@gmail.com"
+        },
+        {
+            "name": "Antonio Okoro",
+            "email": "cheezytony1@gmail.com"
         }
     ],
     "require": {
         "php": "^7.4|^8.0",
         "illuminate/contracts": "^7.0|^8.0",
+        "illuminate/database": "^8.83",
         "illuminate/support": "^7.0|^8.0"
     },
     "require-dev": {

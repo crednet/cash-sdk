@@ -127,6 +127,15 @@ interface CPCash
 
     /**
      * @param string $walletId
+     * @param string $reference
+     * @return mixed
+     * @throws CPCashException
+     * @throws InternalServerException
+     */
+    public function refundTransaction(string $walletId, string $reference);
+
+    /**
+     * @param string $walletId
      * @return array|mixed
      * @throws CPCashException
      * @throws InternalServerException
