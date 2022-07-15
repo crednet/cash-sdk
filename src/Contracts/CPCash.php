@@ -132,15 +132,15 @@ interface CPCash
 	 * @throws CPCashException
 	 * @throws InternalServerException
 	 */
-    public function lockWallet(string $walletId, array $data);
+	public function lockWallet(string $walletId, array $data);
 
-    /**
+	/**
      * @param string $walletId
      * @return array|mixed
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public function unlockWallet(string $walletId);
+	public function unlockWallet(string $walletId);
 
     /**
      * @return mixed
