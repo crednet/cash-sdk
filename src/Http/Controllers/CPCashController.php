@@ -148,7 +148,7 @@ class CPCashController extends Controller
 
     /**
      * @param int|string $walletId
-	 * @param LockRequest $request
+     * @param LockRequest $request
      * @return JsonResponse
      */
     public function lockWallet($walletId, LockRequest $request): JsonResponse
