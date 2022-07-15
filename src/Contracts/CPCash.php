@@ -133,7 +133,7 @@ interface CPCash
      * @throws InternalServerException
      */
     public function lockWallet(string $walletId, array $data);
-	
+
     /**
      * @param string $walletId
      * @return array|mixed
