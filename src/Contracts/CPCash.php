@@ -127,11 +127,12 @@ interface CPCash
 
     /**
      * @param string $walletId
+     * @param array $data
      * @return array|mixed
      * @throws CPCashException
      * @throws InternalServerException
      */
-    public function lockWallet(string $walletId);
+    public function lockWallet(string $walletId, array $data);
 
     /**
      * @param string $walletId
