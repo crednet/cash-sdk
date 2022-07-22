@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static array|mixed withdrawFromWallet(string $walletId, string $amount, string $description)
  * @method static array|mixed thirdPartyWithdraw(string $walletId, string $amount, string $description, string $category)
  * @method static array|mixed debitWallet(string $walletId, $amount, string $description)
- * @method static array|mixed lockWallet(string $walletId)
+ * @method static array|mixed lockWallet(string $walletId, array $data)
  * @method static array|mixed unlockWallet(string $walletId)
  * @method static array|mixed generateTopUpReference(string $walletId)
  * @method static array|mixed updateWalletTransactionByReference(string $walletId, string $reference, string $status)

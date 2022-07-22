@@ -270,15 +270,19 @@ class CashService implements CPCash, VirtualAccount
         );
     }
 
-    /**
+     /**
      * @param string $walletId
+     * @param array $data
      * @return array|mixed
      * @throws CPCashException
      * @throws InternalServerException|NotFoundException
      */
-    public function lockWallet(string $walletId)
+    public function lockWallet(string $walletId, array $data)
     {
-        return static::handleResponse($this->sendRequest()->post(static::getUrl("{$walletId}/lock")));
+	    return static::handleResponse($this->sendRequest()->post(static::getUrl("{$walletId}/lock"), [
+		    'pnd_description' => $data['description'], 
+		    'pnd_type' => $data['type']
+	    ]));
     }
 
     /**
@@ -289,7 +293,7 @@ class CashService implements CPCash, VirtualAccount
      */
     public function unlockWallet(string $walletId)
     {
-        return static::handleResponse($this->sendRequest()->post(static::getUrl("{$walletId}/unlock")));
+        return static::handleResponse($this->sendRequest()->delete(static::getUrl("{$walletId}/lock")));
     }
 
     /**
